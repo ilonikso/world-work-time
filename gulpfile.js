@@ -11,8 +11,6 @@ var imagemin = require("gulp-imagemin");
 var mqpacker = require("css-mqpacker");
 var rename = require("gulp-rename");
 
-// Github pages deploy
-var ghPages = require('gulp-gh-pages');
 
 
 sass.compiler = require('node-sass');
@@ -151,11 +149,7 @@ gulp.task("webp", function(){
     .pipe(gulp.dest("build/img/raster"))
 });
 
-// Deploy Task
-gulp.task('deploy', function() {
-  return gulp.src('./build/**/*')
-    .pipe(ghPages());
-});
+
 
 
 
