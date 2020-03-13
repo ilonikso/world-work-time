@@ -150,9 +150,14 @@ gulp.task("webp", function(){
 });
 
 
+// Build task
+gulp.task('build',gulp.series(['clean','copy','sass','images','webp','symbols']), function(done) { 
+    
+  done();
+});;
 
 
-
+// Default task
 gulp.task('default',gulp.series(['clean','copy','sass','images','webp','symbols','serve']), function(done) { 
     
     done();
