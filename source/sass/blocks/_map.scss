@@ -1,21 +1,85 @@
 .map{
-    
+    color: #2d3436;
+
     &__wrapper{
-        max-width: 800px;
-        width: 100%;
+        max-width: 1400px;
+        width: 90%;
         margin: 0 auto;
+    }
+
+    &__header{
+        font-size: 60px;
+        text-align: center;
+        font-family: 'Roboto';
+        font-weight: 700;
+    }
+
+    &__local{
+        font-family: 'Roboto';
+        font-weight: 700;
+        font-size: 135px;
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    &__items{
+        display: flex;
+        flex-wrap: wrap;
     }
 
     &__item{
         display: flex;
         flex-direction: column;
         align-items: center;
-        outline: 1px solid;
-        max-width: 150px;
+        width: calc(25% - 35px);
+        margin-right: 20px;
+        margin-bottom: 20px;
+        font-family: 'Roboto';
+        border-radius: 10px;
+        color: #2d3436;
+        padding: 10px;
+
+        &:nth-child(4n){
+            margin-right: 0;
+        }
+
+        &-city{
+            margin-top: 8px;
+            margin-bottom: -5px;
+            font-size: 30px;
+        }
 
         &-time{
             font-weight: 600;
-            margin-top: 10px;
+            margin-top: 15px;
+            font-size: 40px;
+        }
+
+        &-status{
+            text-transform: capitalize;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            font-size: 25px;
+        }
+
+        &--morning{
+            background-color: #ffeaa7;
+        }
+
+        &--work{
+            background-color: #2ecc71;
+            
+        }
+
+        &--night{
+            background-color: #2c3e50;
+            color: #ecf0f1;
+        }
+
+        &--evening{
+            background-color: #d35400;
+            color: #FFC312;
         }
     }
 }

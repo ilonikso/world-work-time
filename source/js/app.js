@@ -1,37 +1,57 @@
 
 const nowTime = {
-
     getNow: function(){
         return new Date();
     },
+
     getHours : function(){
         return this.getNow().getHours();
     },
+
     getMinutes: function(){
         let minutes = this.getNow().getMinutes();
         return minutes < 10 ? minutes = '0' + minutes : minutes;
     },
+
     getSeconds: function(){
         let seconds = this.getNow().getSeconds();
         return seconds < 10 ? seconds = '0' + seconds : seconds;
     },
+
     getUTCOffset: function(){
         return this.getNow().getTimezoneOffset() / 60;
     },
 
     getDateLineCross: function(cityUTCOffset){
-        let LocalUTCOffset = -this.getUTCOffset();
-        
-        if(cityUTCOffset < 0 && cityUTCOffset !== LocalUTCOffset){
+        if(cityUTCOffset < 0 && cityUTCOffset !== -this.getUTCOffset()){  
             return 1;    
         }
 
-        return 0
+        return 0;
     },
 
-    getLocalTime: function(){
-        return this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds();
+    getDayStatus: function(cityUTCOffset){
+        let now = this.getCityTime(cityUTCOffset);
+        let hours = +now.charAt(0) * 10 + +now.charAt(1);
+        let status;
+
+        if(hours >= 0 && hours < 4){
+            status = 'night';
+        } else if (hours >= 4 && hours < 8) {
+            status = 'morning'
+        } else if (hours >= 8 && hours < 17) {
+            status = 'work'
+        } else if (hours >= 17 && hours < 20) {
+            status = 'evening'
+        } else if (hours >= 20 && hours < 24) {
+            status = 'night'
+        } else {
+            status = 'no-status'
+        }
+        
+        return status;
     },
+
     getTime: function(offset = 0){
         
         //Offset limit
@@ -54,17 +74,25 @@ const nowTime = {
             return hours + ':' + this.getMinutes();
         }
     },
+
+    getLocalTime: function(){
+        return this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds();
+    },
+
+    getCityTime: function(UTCOffset){
+        return this.getTime(this.getUTCOffset() + UTCOffset + this.getDateLineCross(UTCOffset));
+    }
 }
 
 const cities = [
     {
-        name: 'Local Time',
-        UTCOffset: -nowTime.getUTCOffset()
-    },
-    {
         name: 'London',
         UTCOffset: 0
-    }, 
+    },
+    {
+        name: 'Donetsk',
+        UTCOffset: 3
+    },
     {
         name: 'Moscow',
         UTCOffset: 3
@@ -82,6 +110,10 @@ const cities = [
         UTCOffset: 9 
     },
     {
+        name: 'New Delhi',
+        UTCOffset: 6 
+    },
+    {
         name: 'Kiev',
         UTCOffset: 2 
     },
@@ -91,34 +123,50 @@ const cities = [
     },
 ];
 
-console.log(cities);
-//nowTime.getDateLineCross2(2, 13);
+// UI refs --------------------
+const UIlocalTime = document.querySelector('.map__local');
+const UITimeContainer = document.querySelector('.map__items');
 
-// ------------------------
+const UICitiesRender = function(cities){
+    UITimeContainer.innerHTML = '';
 
+    cities.forEach((item, index) => {
+        let html;
+    
+        html = `
+        <div class="map__item map__item--${nowTime.getDayStatus(item.UTCOffset)}">
+            <span class="map__item-city">${item.name}</span>
+            <span class="map__item-time">${nowTime.getCityTime(item.UTCOffset)}</span>
+            <span class="map__item-status">${nowTime.getDayStatus(item.UTCOffset)}</span>
+        </div>
+        `;
+    
+        UITimeContainer.innerHTML += html;
+    });
+};
+// UI refs --------------------
 
+//console.log('Local time | ' + nowTime.getTime());
+//console.log('UTC time | ' + nowTime.getTime(nowTime.getUTCOffset()));
+//console.log('New York time | ' + nowTime.getTime(nowTime.getUTCOffset() - 5 + 1));
+//console.log('Los Angeles time | ' + nowTime.getTime(nowTime.getUTCOffset() - 8 + 1));
+//console.log('Tokio time | ' + nowTime.getTime(nowTime.getUTCOffset() + 9 ));
+//console.log('Kiev time | ' + nowTime.getTime(nowTime.getUTCOffset() + 2 ));
 
-console.log('Local time | ' + nowTime.getTime());
-console.log('UTC time | ' + nowTime.getTime(nowTime.getUTCOffset()));
-
-console.log('New York time | ' + nowTime.getTime(nowTime.getUTCOffset() - 5 + 1));
-
-console.log('Los Angeles time | ' + nowTime.getTime(nowTime.getUTCOffset() - 8 + 1));
-
-console.log('Tokio time | ' + nowTime.getTime(nowTime.getUTCOffset() + 9 ));
-
-console.log('Kiev time | ' + nowTime.getTime(nowTime.getUTCOffset() + 2 ));
-
-cities.forEach(item => {
-    console.log(`--- ${item.name} time | ${nowTime.getTime(nowTime.getUTCOffset() + item.UTCOffset + nowTime.getDateLineCross(item.UTCOffset) ) }`);
-    //console.log(`To ${item.name} - Cross the line ${nowTime.getDateLineCross(item.UTCOffset)}`)
-});
-
+// Initialization
+UIlocalTime.textContent = nowTime.getLocalTime();
+UICitiesRender(cities);
 
 // Update time cycle
 (function(){
     setInterval(() => {
-        //console.log('Local time | ' + nowTime.getLocalTime());
-        
+        // Update Local times
+        UIlocalTime.textContent = nowTime.getLocalTime();
+
+        // Update cities time every minute
+        if(nowTime.getSeconds() == 0){
+            UICitiesRender(cities);
+        }
+
     }, 1000);
 })();
