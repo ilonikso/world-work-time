@@ -43,6 +43,8 @@ const cities = [
 // UI refs --------------------
 const UIlocalTime = document.querySelector('.map__local');
 const UITimeContainer = document.querySelector('.map__items');
+const UIPageTitle = document.querySelector('title');
+
 
 const UICitiesRender = function(cities){
     UITimeContainer.innerHTML = '';
@@ -61,11 +63,13 @@ const UICitiesRender = function(cities){
         UITimeContainer.innerHTML += html;
     });
 };
+
 // UI refs --------------------
 
 
 // Time Initialization
 UIlocalTime.textContent = nowTime.getLocalTime();
+UIPageTitle.textContent = nowTime.renderTime();
 UICitiesRender(cities);
 
 // Update time cycle
@@ -77,6 +81,7 @@ UICitiesRender(cities);
         // Update cities time every minute
         if(nowTime.getSeconds() == 0){
             UICitiesRender(cities);
+            UIPageTitle.textContent = nowTime.renderTime();
         }
 
     }, 1000);

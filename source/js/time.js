@@ -85,4 +85,8 @@ class Time {
             this.getUTCOffset() + UTCOffset + this.getDateLineCross(UTCOffset)
         );
     }
+
+    renderTime() {
+        return `Time is ${this.getCityTime(-this.getUTCOffset())}`
+    }
 }
