@@ -1,88 +1,94 @@
+function Time() {
+    this.now = new Date();
+};
 
-const nowTime = {
-    getNow: function(){
-        return new Date();
-    },
-
-    getHours : function(){
-        return this.getNow().getHours();
-    },
-
-    getMinutes: function(){
-        let minutes = this.getNow().getMinutes();
-        return minutes < 10 ? minutes = '0' + minutes : minutes;
-    },
-
-    getSeconds: function(){
-        let seconds = this.getNow().getSeconds();
-        return seconds < 10 ? seconds = '0' + seconds : seconds;
-    },
-
-    getUTCOffset: function(){
-        return this.getNow().getTimezoneOffset() / 60;
-    },
-
-    getDateLineCross: function(cityUTCOffset){
-        if(cityUTCOffset < 0 && cityUTCOffset !== -this.getUTCOffset()){  
-            return 1;    
-        }
-
-        return 0;
-    },
-
-    getDayStatus: function(cityUTCOffset){
-        let now = this.getCityTime(cityUTCOffset);
-        let hours = +now.charAt(0) * 10 + +now.charAt(1);
-        let status;
-
-        if(hours >= 0 && hours < 4){
-            status = 'night';
-        } else if (hours >= 4 && hours < 8) {
-            status = 'morning'
-        } else if (hours >= 8 && hours < 17) {
-            status = 'work'
-        } else if (hours >= 17 && hours < 20) {
-            status = 'evening'
-        } else if (hours >= 20 && hours < 24) {
-            status = 'night'
-        } else {
-            status = 'no-status'
-        }
-        
-        return status;
-    },
-
-    getTime: function(offset = 0){
-        
-        //Offset limit
-        offset >= 12 ? offset -= 24 : offset;
-        offset <= -12 ? offset += 24 : offset;
-
-        // Check hour > 24
-        let hours = this.getHours() + offset;
-        
-        // Hours limit
-        hours >= 24 ? hours -= 24 : hours;
-        hours <= 0 ? hours += 24 : hours;
-        // Formating to 00:00
-        hours < 10 ? hours = '0' + hours : hours;
-
-
-        if(hours === 24){
-            return '00' + ':' + this.getMinutes();
-        } else{
-            return hours + ':' + this.getMinutes();
-        }
-    },
-
-    getLocalTime: function(){
-        return this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds();
-    },
-
-    getCityTime: function(UTCOffset){
-        return this.getTime(this.getUTCOffset() + UTCOffset + this.getDateLineCross(UTCOffset));
-    }
+Time.prototype.getNow = function(){
+    return new Date();
 }
+
+Time.prototype.getHours = function(){
+    return this.getNow().getHours();
+}
+
+Time.prototype.getMinutes = function(){
+    let minutes = this.getNow().getMinutes();
+    return minutes < 10 ? minutes = '0' + minutes : minutes;
+},
+
+Time.prototype.getSeconds = function(){
+    let seconds = this.getNow().getSeconds();
+    return seconds < 10 ? seconds = '0' + seconds : seconds;
+},
+
+Time.prototype.getUTCOffset = function(){
+    return this.getNow().getTimezoneOffset() / 60;
+},
+
+Time.prototype.getDateLineCross = function(cityUTCOffset){
+    if(cityUTCOffset < 0 && cityUTCOffset !== -this.getUTCOffset()){  
+        return 1;    
+    }
+
+    return 0;
+},
+
+Time.prototype.getDayStatus = function(cityUTCOffset){
+    let now = this.getCityTime(cityUTCOffset);
+    let hours = +now.charAt(0) * 10 + +now.charAt(1);
+    let status;
+
+    if(hours >= 0 && hours < 4){
+        status = 'night';
+    } else if (hours >= 4 && hours < 8) {
+        status = 'morning'
+    } else if (hours >= 8 && hours < 17) {
+        status = 'work'
+    } else if (hours >= 17 && hours < 20) {
+        status = 'evening'
+    } else if (hours >= 20 && hours < 24) {
+        status = 'night'
+    } else {
+        status = 'no-status'
+    }
+    
+    return status;
+},
+
+Time.prototype.getTime = function(offset = 0){
+    
+    //Offset limit
+    offset >= 12 ? offset -= 24 : offset;
+    offset <= -12 ? offset += 24 : offset;
+
+    // Check hour > 24
+    let hours = this.getHours() + offset;
+    
+    // Hours limit
+    hours >= 24 ? hours -= 24 : hours;
+    hours <= 0 ? hours += 24 : hours;
+    // Formating to 00:00
+    hours < 10 ? hours = '0' + hours : hours;
+
+
+    if(hours === 24){
+        return '00' + ':' + this.getMinutes();
+    } else{
+        return hours + ':' + this.getMinutes();
+    }
+},
+
+Time.prototype.getLocalTime =  function(){
+    return this.getHours() + ':' + this.getMinutes() + ':' + this.getSeconds();
+},
+
+Time.prototype.getCityTime = function(UTCOffset){
+    return this.getTime(this.getUTCOffset() + UTCOffset + this.getDateLineCross(UTCOffset));
+}
+
+const nowTime = new Time();
+console.log(nowTime)
+
+
 
 const cities = [
     {
