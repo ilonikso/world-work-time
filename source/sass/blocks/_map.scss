@@ -5,6 +5,7 @@
         max-width: 1400px;
         width: 90%;
         margin: 0 auto;
+        padding-bottom: 50px;
     }
 
     &__header{
@@ -23,6 +24,62 @@
         margin-bottom: 20px;
     }
 
+    &__input{
+        outline: 1px solid red;
+        font-size: 25px;
+        font-family: 'Open Sans';
+        padding: 20px;
+        flex-direction: column;
+        width: 60%;
+        margin: 0 auto;
+
+        input{
+            padding: 10px;
+            padding-bottom: 12px;
+            padding-left: 15px;
+            padding-right: 15px;
+            border: 1px solid black;
+            border-radius: 5px;
+            margin-right: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+
+            &::placeholder{
+                color: rgba(black, 0.5);
+            }
+        }
+
+        .invalid-feedback{
+            margin-bottom: 15px;
+            color: red;
+            visibility: hidden;
+        }
+
+        .is-invalid{
+            border: 1px solid red;
+            color: red;
+
+            &::placeholder{
+                color: red;
+            }
+        }
+
+        label{
+            font-size: 35px;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        &-submit{
+            background-color: light-grey;
+            border-color: light-grey;
+            border: none;
+        }
+    }
+
+
+
     &__items{
         display: flex;
         flex-wrap: wrap;
@@ -39,6 +96,8 @@
         border-radius: 10px;
         color: #2d3436;
         padding: 10px;
+        position: relative;
+        box-shadow: 0px 4px 12px rgba(#000, .6);
 
         &:nth-child(4n){
             margin-right: 0;
@@ -65,6 +124,56 @@
             font-family: 'Roboto';
         }
 
+        &-close{
+            display: block;
+            content: '';
+            position: absolute;
+            font-size: 0;
+            width: 20px;
+            height: 20px;
+            right: 15px;
+            top: 14px;
+            background-image: url('../img/raster/cross.png');
+            background-size: cover;
+            opacity: 0.7;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: $anim;
+
+            &:hover{
+                opacity: 1;
+            }
+
+            &:active{
+                transform: scale(0.8);
+            }
+        }
+
+        &-edit{
+            display: block;
+            content: '';
+            position: absolute;
+            font-size: 0;
+            width: 19px;
+            height: 19px;
+            left: 16px;
+            top: 15px;
+            background-image: url('../img/raster/edit.png');
+            background-size: cover;
+            opacity: 0.4;
+            
+            cursor: pointer;
+            transition: $anim;
+
+            &:hover{
+                opacity: 0.6;
+            }
+
+            &:active{
+                transform: scale(0.8);
+            }
+        }
+
         &--morning{
             background-color: #ffeaa7;
         }
@@ -77,11 +186,23 @@
         &--night{
             background-color: #2c3e50;
             color: #ecf0f1;
+
+            
         }
 
         &--evening{
             background-color: #d35400;
             color: #FFC312;
+        }
+    }
+
+    &__item--night{
+        .map__item-close{
+            filter: invert(1)
+        }
+
+        .map__item-edit{
+            filter: invert(1)
         }
     }
 }
