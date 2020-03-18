@@ -40,6 +40,48 @@ class Storage {
         return items;
     }
 
+    getItemFromStorage(id) {
+        let items;
+        let found = null;
+
+        if(localStorage.getItem('items') === null){
+            items = [];
+        } else{
+            items = JSON.parse(localStorage.getItem('items'));
+        }
+
+        items.forEach(function(item){
+            if(item.id === id){
+                found = item;
+            }
+        });
+
+        return found;
+    }
+
+    updateItemFromStorage(id, newItem){
+        let items;
+
+        if(localStorage.getItem('items') === null){
+            items = [];
+        } else{
+            items = JSON.parse(localStorage.getItem('items'));
+        }
+
+        let old = this.getItemFromStorage(id);
+
+        items.splice(id, 1, newItem);
+
+        this.clearItemsFromStorage();
+
+        items.forEach(item => {
+            this.storeItem(item);
+        })
+
+        return items;
+        
+    }
+
     deleteItemFromStorage(id){
         let items = JSON.parse(localStorage.getItem('items'));
 
@@ -55,5 +97,19 @@ class Storage {
 
     clearItemsFromStorage (){
         localStorage.removeItem('items');
+    }
+
+    getNewID(){
+        let ID;
+        let cities = this.getItemsFromStorage();
+
+    
+        if(cities.length > 0){
+            ID = cities[cities.length - 1].id + 1;
+        } else {
+            ID = 0;
+        }
+
+        return ID;
     }
 }

@@ -6,6 +6,8 @@ const ls = new Storage();
 const valid = new Validator();
 
 
+
+
 ls.getItemsFromStorage().forEach(item => {
     console.log(item);
 });
@@ -64,6 +66,9 @@ const UIPageTitle = document.querySelector('title');
 const UIInputCity = document.querySelector('.map__input-city');
 const UIInputOffset = document.querySelector('.map__input-offset');
 const UIInputSubmit = document.querySelector('.map__input-submit');
+const UIInputEdit = document.querySelector('.map__input-submit-edit');
+//const UICloseButton = document.querySelector('.map__item-close');
+
 
 
 const UICitiesRender = function(cities){
@@ -77,8 +82,8 @@ const UICitiesRender = function(cities){
             <span class="map__item-city">${item.name}</span>
             <span class="map__item-time">${nowTime.getCityTime(item.UTCOffset)}</span>
             <span class="map__item-status">${nowTime.getDayStatus(item.UTCOffset)}</span>
-            <span class="map__item-edit title="edit item">Edit</span>
-            <span class="map__item-close title="delete item">Close</span>
+            <span class="map__item-edit" title="edit city">Edit</span>
+            <span class="map__item-close" title="delete city">Close</span>
         </div>
         `;
     
@@ -92,42 +97,82 @@ UIInputSubmit.addEventListener('click', (e) => {
     let city = UIInputCity, 
         offset = UIInputOffset;
 
-
     if(city !== '' && offset !== ''){
         if(valid.validateName(UIInputCity) && valid.validateOffset(UIInputOffset)) {
-            let ID;
-            let cities = ls.getItemsFromStorage();
-
-        
-            if(cities.length > 0){
-                ID = cities[cities.length - 1].id + 1;
-            } else {
-                ID = 0;
-            }
-
+           
             // Create new Item and Update DOM
-            let newItem = new City(city.value, +offset.value, ID);
+            let newItem = new City(city.value, parseInt(offset.value), ls.getNewID());
             ls.storeItem(newItem);
             UICitiesRender(ls.getItemsFromStorage());
-
+            
+            // Clear fields
             UIInputCity.value = '';
             UIInputOffset.value = '';
         }
     }
+
+    console.log()
     
     e.preventDefault();
 });
 
+
+
 // Delete Item
 UITimeContainer.addEventListener('click', e1 => {
-    let item = e1.target.parentElement;
-    let itemId = item.getAttribute('data-id');
+    
+    if(e1.target.className === 'map__item-close'){
 
-    ls.deleteItemFromStorage(+itemId);
-    UICitiesRender(ls.getItemsFromStorage());
+        let item = e1.target.parentElement;
+        let itemId = item.getAttribute('data-id');
+        updateFlag = true;
+
+        ls.deleteItemFromStorage(parseInt(itemId));
+        UICitiesRender(ls.getItemsFromStorage());
+    }
     
     e1.preventDefault();
 });
+
+// Edit Item
+
+UITimeContainer.addEventListener('click', e2 => {
+    if(e2.target.className === 'map__item-edit'){
+        let item = e2.target.parentElement;
+        let itemId = item.getAttribute('data-id');
+        let city = ls.getItemFromStorage(parseInt(itemId));
+
+        UIInputCity.value = city.name;
+        UIInputOffset.value = city.UTCOffset;
+
+        UIInputEdit.addEventListener('click', () => {
+            let city = UIInputCity, 
+                offset = UIInputOffset;
+
+            if(city !== '' && offset !== ''){
+                if(valid.validateName(UIInputCity) && valid.validateOffset(UIInputOffset)) {
+                    let newItem = new City(city.value, parseInt(offset.value), +itemId);
+                    
+                    // Update and render cities
+                    ls.updateItemFromStorage(itemId, newItem);
+                    UICitiesRender(ls.getItemsFromStorage());
+
+                    // Clear fields
+                    UIInputCity.value = '';
+                    UIInputOffset.value = '';
+                    
+                }
+            }
+        });
+
+        //console.log(city);
+    }
+
+    e2.preventDefault();
+});
+
+
+
 
 // UI refs --------------------
 
