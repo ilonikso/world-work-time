@@ -103,7 +103,6 @@ class Storage {
         let ID;
         let cities = this.getItemsFromStorage();
 
-    
         if(cities.length > 0){
             ID = cities[cities.length - 1].id + 1;
         } else {

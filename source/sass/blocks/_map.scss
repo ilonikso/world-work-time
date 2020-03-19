@@ -25,20 +25,20 @@
     }
 
     &__input{
-        outline: 1px solid red;
         font-size: 25px;
         font-family: 'Open Sans';
         padding: 20px;
         flex-direction: column;
         width: 60%;
+        max-width: 700px;
         margin: 0 auto;
 
         input{
             padding: 10px;
-            padding-bottom: 12px;
+            padding-bottom: 13px;
             padding-left: 15px;
             padding-right: 15px;
-            border: 1px solid black;
+            border: 1px solid #2d3436;;
             border-radius: 5px;
             margin-right: 5px;
             width: 100%;
@@ -76,6 +76,30 @@
             border-color: light-grey;
             border: none;
         }
+
+        &-submit-edit{
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        &-submit-cancel{
+            background-color: #F44336;
+            color: #fff;
+        }
+    }
+
+    &__edit{
+        
+        display: flex;
+        justify-content: space-between;
+
+        input{
+            width: 49%;
+            margin: 0;
+            border-width: 0px;
+        }
+
+
     }
 
 
@@ -98,6 +122,7 @@
         padding: 10px;
         position: relative;
         box-shadow: 0px 4px 12px rgba(#000, .6);
+        transition: $anim;
 
         &:nth-child(4n){
             margin-right: 0;
@@ -194,6 +219,41 @@
             background-color: #d35400;
             color: #FFC312;
         }
+
+        &--edit{
+            background-color: #fdcb6e;
+            color: #2d3436;
+        }
+
+        &--add{
+            background-color: #dfe6e9;
+            min-height: 159px;
+            position: relative;
+            opacity: 0.7;
+            transition: $anim;
+
+            &::before{
+                display: block;
+                content: '';
+                width: 50px;
+                height: 50px;
+                position: absolute;
+                left: 50%;
+                top: 60%;
+                background-image: url('../img/raster/add.png');
+                background-size: cover;
+                opacity: 0.3;
+                transform: translate(-50%, -50%);
+            }
+
+            &:hover{
+                opacity: 1;
+            }
+
+            &:active{
+                transform: scale(0.95);
+            }
+        }
     }
 
     &__item--night{
@@ -205,6 +265,31 @@
             filter: invert(1)
         }
     }
+
+    &__item--edit{
+        .map__item-close{
+            filter: invert(0)
+        }
+
+        .map__item-edit{
+            filter: invert(0)
+        }
+    }
+
+    &__item--add{
+        .map__item-status{
+            opacity: 0;
+            font-size: 0;
+        }
+
+        .map__item-time{
+            padding-right: 12px;
+            padding-left: 12px;
+            border-radius: 50%;
+        }
+    }
+
+
 
     &__input-submit-edit{
         //display: none;
