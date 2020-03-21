@@ -12,6 +12,7 @@ ls.getItemsFromStorage().forEach(item => {
 const UIlocalTime = document.querySelector(".map__local");
 const UITimeContainer = document.querySelector(".map__items");
 const UIPageTitle = document.querySelector("title");
+const UICitiesNumber = document.querySelector(".map__cities-num");
 const UIInputCity = document.querySelector(".map__input-city");
 const UIInputOffset = document.querySelector(".map__input-offset");
 const UIInputSubmit = document.querySelector(".map__input-submit");
@@ -49,7 +50,12 @@ const UICitiesRender = function(cities){
     </div>
     `;
 
+    UICitiesNumber.textContent = cities.length;
+
     UITimeContainer.innerHTML += addButton;
+
+    
+
 
     document.querySelector(".map__item--add").addEventListener("click", () => {
         modal.show();
