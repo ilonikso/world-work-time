@@ -16,11 +16,13 @@ class Validator {
         if (!re.test(name.value)) {
             name.classList.add("is-invalid");
             error.style.visibility = "visible";
+            error.style.display = "block";
 
             return false;
         } else {
             name.classList.remove("is-invalid");
             error.style.visibility = "hidden";
+            error.style.display = "none";
 
             return true;
         }
@@ -34,11 +36,13 @@ class Validator {
         if (+zip.value >= -12 && +zip.value <= 12) {
             zip.classList.remove("is-invalid");
             error.style.visibility = "hidden";
+            error.style.display = "none";
 
             return true;
         } else {
             zip.classList.add("is-invalid");
             error.style.visibility = "visible";
+            error.style.display = "block";
 
             return false;
         }

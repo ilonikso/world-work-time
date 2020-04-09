@@ -18,6 +18,7 @@ const UIInputOffset = document.querySelector(".map__input-offset");
 const UIInputSubmit = document.querySelector(".map__input-submit");
 const UIInputEdit = document.querySelector(".map__input-submit-edit");
 const UIInputCancel = document.querySelector(".map__input-submit-cancel");
+const UIMode = document.querySelector('.nav__input');
 
 const UICitiesRender = function(cities){
     UITimeContainer.innerHTML = '';
@@ -100,8 +101,6 @@ UIInputSubmit.addEventListener("click", e => {
     e.preventDefault();
 });
 
-
-
 // Delete Item
 UITimeContainer.addEventListener("click", e1 => {
     if (e1.target.className === "map__item-close") {
@@ -117,7 +116,6 @@ UITimeContainer.addEventListener("click", e1 => {
 });
 
 // Edit Item
-
 UITimeContainer.addEventListener("click", e2 => {
     if (e2.target.className === "map__item-edit") {
         let item = e2.target.parentElement;
@@ -179,6 +177,18 @@ UITimeContainer.addEventListener("click", e2 => {
 
     e2.preventDefault();
 });
+
+
+// Dark mode
+UIMode.addEventListener('change', () => {
+    document.body.classList.toggle('dark-mode');
+
+    if(document.body.classList.contains('dark-mode')){
+        document.querySelector('.nav__mode').textContent = 'Light mode';
+    } else{
+        document.querySelector('.nav__mode').textContent = 'Dark mode';
+    }
+})
 
 
 

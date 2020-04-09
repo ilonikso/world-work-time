@@ -1,5 +1,5 @@
 .map{
-    color: #2d3436;
+    //color: #2d3436;
 
     &__wrapper{
         max-width: 1000px;
@@ -23,6 +23,7 @@
         text-align: center;
         margin-top: 20px;
         margin-bottom: 15px;
+        
     }
 
     &__input{
@@ -55,6 +56,7 @@
             margin-bottom: 15px;
             color: red;
             visibility: hidden;
+            display: none;
         }
 
         .is-invalid{
@@ -76,21 +78,49 @@
             background-color: light-grey;
             border-color: light-grey;
             border: none;
+            transition: $anim;
+            margin-top: 40px;
+
+            &:hover{
+                opacity: 0.8;
+            }
+
+            &:active{
+                opacity: 0.6;
+                transform: scale(0.98);
+            }
         }
 
         &-submit-edit{
             background-color: #4CAF50;
             color: #fff;
+
+            &:hover{
+                opacity: 0.8;
+            }
+
+            &:active{
+                opacity: 0.6;
+                transform: scale(0.98);
+            }
         }
 
         &-submit-cancel{
             background-color: #F44336;
             color: #fff;
+
+            &:hover{
+                opacity: 0.8;
+            }
+
+            &:active{
+                opacity: 0.6;
+                transform: scale(0.98);
+            }
         }
     }
 
     &__edit{
-        
         display: flex;
         justify-content: space-between;
 
@@ -99,8 +129,6 @@
             margin: 0;
             border-width: 0px;
         }
-
-
     }
 
     &__items{
@@ -239,6 +267,7 @@
             position: relative;
             opacity: 0.7;
             transition: $anim;
+            cursor: pointer;
 
             &::before{
                 display: block;

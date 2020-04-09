@@ -10,7 +10,24 @@
     <link rel="preload" href="css/style.min.css" as="style">
     <link rel="stylesheet" type="text/css" href="css/style.min.css">
 </head>
-<body>
+<body class="dark-mode1">
+    <nav class="nav">
+        <div class="nav__wrapper">
+            <a href="https://ilonikso.com/" class="nav__logo"><img src="img/raster/header__logo.png" alt="logo"></a>
+            <div class="nav__links">
+                
+                <span class="nav__mode">Dark mode</span>    
+                <label class="switch nav__switch">
+                    
+                    <input type="checkbox" class="nav__input">
+                    <span class="slider round"></span>
+                </label>
+
+                
+
+            </div>
+        </div>
+    </nav>
    
     <section class="map">
         <div class="map__wrapper">
@@ -44,13 +61,15 @@
             <h3 class="map__items-header">Cities: <span class="map__cities-num"><span></h3>
             <div class="map__items">
                 
-                
             </div>    
-            <!-- <div class="map__item map__item--add">
-                <span class="map__item-city">Add new city</span>
-            </div>         -->
         </div>
     </section>
+
+    <footer class="footer">
+        <div class="footer__wrapper">
+
+        </div>
+    </footer>
 
 <div class="overlay js-overlay-modal"></div>
 
