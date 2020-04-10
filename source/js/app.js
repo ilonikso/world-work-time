@@ -1,8 +1,9 @@
-// Initialize time object
+// Initialize objects
 const nowTime = new Time();
 const ls = new Storage();
 const valid = new Validator();
 const modal = new Modal();
+
 
 
 // UI refs --------------------
@@ -48,11 +49,12 @@ const UICitiesRender = function(cities){
     </div>
     `;
 
+    // Show number of cities
     UICitiesNumber.textContent = cities.length;
-
+    // Add render
     UITimeContainer.innerHTML += addButton;
 
-    
+    // Open modal
     document.querySelector(".map__item--add").addEventListener("click", () => {
         modal.show();
     });
@@ -64,12 +66,9 @@ UIInputSubmit.addEventListener("click", e => {
         offset = UIInputOffset;
 
     // Show modal
-
     if (city !== "" && offset !== "") {
-        if (
-            valid.validateName(UIInputCity) &&
-            valid.validateOffset(UIInputOffset)
-        ) {
+        if (valid.validateName(UIInputCity) && valid.validateOffset(UIInputOffset)) {
+            
             // Create new Item and Update DOM
             let newItem = new City(
                 city.value,
@@ -161,8 +160,6 @@ UITimeContainer.addEventListener("click", e2 => {
 
             item.classList.remove("map__item--edit");
         });
-
-        //console.log(city);
     }
 
     e2.preventDefault();
@@ -183,9 +180,7 @@ const UIModeInit = function(){
         document.body.classList.remove('dark-mode');
         UIMode.checked = false;
         document.querySelector('.nav__mode').textContent = 'Dark mode';
-    }
-
-    
+    }    
 };
 
 // Dark mode change
@@ -200,11 +195,9 @@ UIMode.addEventListener('change', () => {
         ls.storeMode('light');
     }
 
-    document.body.style.transition = ".2s ease";
-    
-})
-
-
+    // Add transition for background change
+    document.body.style.transition = ".2s ease"; 
+});
 
 
 // UI refs --------------------
@@ -214,6 +207,7 @@ UIlocalTime.textContent = nowTime.getLocalTime();
 UIPageTitle.textContent = nowTime.renderTime();
 UIModeInit();
 UICitiesRender(ls.getItemsFromStorage());
+
 
 
 // Update time cycle
