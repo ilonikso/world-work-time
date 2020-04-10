@@ -17,6 +17,7 @@ const UIInputSubmit = document.querySelector(".map__input-submit");
 const UIInputEdit = document.querySelector(".map__input-submit-edit");
 const UIInputCancel = document.querySelector(".map__input-submit-cancel");
 const UIMode = document.querySelector('.nav__input');
+const UITimeHeader = document.querySelector('.map__header');
 
 const UICitiesRender = function(cities){
     UITimeContainer.innerHTML = '';
@@ -181,6 +182,8 @@ const UIModeInit = function(){
         UIMode.checked = false;
         document.querySelector('.nav__mode').textContent = 'Dark mode';
     }    
+
+    UITimeHeader.textContent = `Local time: (UTC ${-nowTime.getUTCOffset() < 0 ? -nowTime.getUTCOffset(): '+' + -nowTime.getUTCOffset()}:00)`;
 };
 
 // Dark mode change
@@ -193,6 +196,7 @@ UIMode.addEventListener('change', () => {
     } else{
         document.querySelector('.nav__mode').textContent = 'Dark mode';
         ls.storeMode('light');
+        console.log(1)
     }
 
     // Add transition for background change

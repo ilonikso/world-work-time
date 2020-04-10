@@ -20,6 +20,24 @@
       }
     }
 
+    .map{
+
+      &__input{
+        .invalid-feedback{
+          color: #ff4111;
+        }
+
+        .is-invalid{
+          border: 1px solid #ff4111;
+          color: #ff4111;
+
+          &::placeholder{
+              color: #ff4111;
+          }
+      }
+      }
+    }
+
     .footer{
       .social__list{
         svg{
