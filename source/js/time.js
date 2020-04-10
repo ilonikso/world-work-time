@@ -87,6 +87,6 @@ class Time {
     }
 
     renderTime() {
-        return `Time is ${this.getCityTime(-this.getUTCOffset())}`
+        return `Time is ${this.getCityTime(-this.getUTCOffset())}`;
     }
 }
