@@ -111,4 +111,20 @@ class Storage {
 
         return ID;
     }
+
+    getModeFromStorage(){
+        let mode;
+
+        if(localStorage.getItem('mode') === null){
+            mode = 'light';
+        } else{
+            mode = localStorage.getItem('mode');
+        }
+
+        return mode;
+    }
+
+    storeMode(mode){
+        localStorage.setItem('mode', mode);
+    }
 }

@@ -4,9 +4,6 @@ const ls = new Storage();
 const valid = new Validator();
 const modal = new Modal();
 
-ls.getItemsFromStorage().forEach(item => {
-    console.log(item);
-});
 
 // UI refs --------------------
 const UIlocalTime = document.querySelector(".map__local");
@@ -56,19 +53,12 @@ const UICitiesRender = function(cities){
     UITimeContainer.innerHTML += addButton;
 
     
-
-
     document.querySelector(".map__item--add").addEventListener("click", () => {
         modal.show();
     });
 };
 
 // Add Item
-
-//UIAddItem.addEventListener('click', () => {
-//modal.show();
-//});
-
 UIInputSubmit.addEventListener("click", e => {
     let city = UIInputCity,
         offset = UIInputOffset;
@@ -179,15 +169,39 @@ UITimeContainer.addEventListener("click", e2 => {
 });
 
 
-// Dark mode
+// Dark mode initialization
+const UIModeInit = function(){
+    mode = ls.getModeFromStorage();
+
+    if(mode === 'dark'){
+        document.body.classList.add('dark-mode');
+        UIMode.checked = true;
+        document.querySelector('.nav__mode').textContent = 'Light mode';
+    }
+
+    if(mode === 'light'){
+        document.body.classList.remove('dark-mode');
+        UIMode.checked = false;
+        document.querySelector('.nav__mode').textContent = 'Dark mode';
+    }
+
+    
+};
+
+// Dark mode change
 UIMode.addEventListener('change', () => {
     document.body.classList.toggle('dark-mode');
 
     if(document.body.classList.contains('dark-mode')){
         document.querySelector('.nav__mode').textContent = 'Light mode';
+        ls.storeMode('dark');
     } else{
         document.querySelector('.nav__mode').textContent = 'Dark mode';
+        ls.storeMode('light');
     }
+
+    document.body.style.transition = ".2s ease";
+    
 })
 
 
@@ -198,7 +212,9 @@ UIMode.addEventListener('change', () => {
 // Time Initialization
 UIlocalTime.textContent = nowTime.getLocalTime();
 UIPageTitle.textContent = nowTime.renderTime();
+UIModeInit();
 UICitiesRender(ls.getItemsFromStorage());
+
 
 // Update time cycle
 (function() {
