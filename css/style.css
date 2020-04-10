@@ -363,7 +363,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  min-width: 375px;
+  min-width: 320px;
   font-size: 28px;
   max-width: 1920px;
   margin: 0 auto;
@@ -631,6 +631,8 @@ img {
 @media (max-width: 539.8px) {
   .map__local {
     font-size: 80px; }
+  .map__header {
+    font-size: 28px; }
   .map__item {
     width: calc(100%);
     margin-right: 0; }
